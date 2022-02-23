@@ -4,7 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import test.scissorsstonepaper.model.Player;
+import test.scissorsstonepaper.model.Statistic;
 import test.scissorsstonepaper.service.PlayerService;
+import test.scissorsstonepaper.service.StatisticService;
 import test.scissorsstonepaper.utils.JwtUtil;
 
 import java.util.List;
@@ -13,10 +15,12 @@ import java.util.List;
 @RequestMapping("/player")
 public class PlayerResource {
     private final PlayerService playerService;
+    private final StatisticService statisticService;
     private final JwtUtil jwtUtil;
 
-    public PlayerResource(PlayerService playerService, JwtUtil jwtUtil) {
+    public PlayerResource(PlayerService playerService, StatisticService statisticService, JwtUtil jwtUtil) {
         this.playerService = playerService;
+        this.statisticService = statisticService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -43,6 +47,7 @@ public class PlayerResource {
     @PostMapping("/register")
     public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
         Player newPlayer = playerService.addPlayer(player);
+        statisticService.addStatistic(new Statistic(null, newPlayer.getId(), 0, 0,0));
         return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
     }
 

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import test.scissorsstonepaper.model.Statistic;
 import test.scissorsstonepaper.requests.UpdateStatisticRequest;
 import test.scissorsstonepaper.service.StatisticService;
+import test.scissorsstonepaper.utils.JwtUtil;
 
 import java.util.List;
 
@@ -13,9 +14,18 @@ import java.util.List;
 @RequestMapping("/statistic")
 public class StatisticResource {
     private final StatisticService statisticService;
+    private final JwtUtil jwtUtil;
 
-    public StatisticResource(StatisticService statisticService) {
+    public StatisticResource(StatisticService statisticService, JwtUtil jwtUtil) {
         this.statisticService = statisticService;
+        this.jwtUtil = jwtUtil;
+    }
+
+    @GetMapping("/currentuser")
+    public ResponseEntity<Statistic> getStatisticForCurrentUser(@RequestHeader("Authorization") String token) {
+        Long playerId = this.jwtUtil.getPlayerIdFromHeader(token);
+        Statistic statistic = statisticService.findStatisticByPlayerId(playerId);
+        return new ResponseEntity<>(statistic, HttpStatus.OK);
     }
 
     @GetMapping

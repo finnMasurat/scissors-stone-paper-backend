@@ -21,7 +21,7 @@ public class StatisticService {
 
     public Statistic findStatisticByPlayerId(Long playerId) {
         return this.statisticRepo.findStatisticByPlayerId(playerId)
-                .orElseThrow(() -> new StatisticNotFoundException("Statistic for player #" + playerId + "was not found"));
+                .orElseThrow(() -> new StatisticNotFoundException("Statistic for Player #" + playerId + " was not found"));
     }
 
     public Statistic addStatistic(Statistic statistic) {
@@ -30,10 +30,7 @@ public class StatisticService {
 
     public Statistic updateStatistic(Long playerId, String type) {
         Statistic statistic = this.statisticRepo.findStatisticByPlayerId(playerId)
-                .orElse(this.addStatistic(new Statistic()));
-
-        statistic.setPlayerId(playerId);
-
+                .orElseThrow(() -> new StatisticNotFoundException("Statistic for Player #" + playerId + " was not found"));
         switch (type) {
             case "win":
                 statistic.setWinCount(statistic.getWinCount() + 1);
