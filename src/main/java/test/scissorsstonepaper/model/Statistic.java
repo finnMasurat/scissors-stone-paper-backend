@@ -16,20 +16,25 @@ public class Statistic implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
-    @Column(nullable = false)
-    private Long playerId;
     @Column
     private Integer winCount;
     @Column
     private Integer lossCount;
     @Column
     private Integer drawCount;
+//    @OneToOne(fetch=FetchType.LAZY, mappedBy = "statistic")
+//    private Player player;
+
+    public Statistic(int win, int loss, int draw) {
+        this.winCount = win;
+        this.lossCount = loss;
+        this.drawCount = draw;
+    }
 
     @Override
     public String toString() {
         return "Statistic{" +
                 "id=" + id +
-                ", playerId='" + playerId + '\'' +
                 ", winCount='" + winCount + '\'' +
                 ", lossCount='" + lossCount + '\'' +
                 ", drawCount='" + drawCount + '\'' +

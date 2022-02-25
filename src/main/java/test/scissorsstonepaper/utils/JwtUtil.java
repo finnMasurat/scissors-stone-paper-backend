@@ -23,7 +23,6 @@ public class JwtUtil {
 
     public Long extractPlayerId(String token) {
         Claims claims = extractAllClaims(token);
-        System.out.println("PLAAAAAYER_ID: " + claims.get("playerId"));
         return ((Number)claims.get("playerId")).longValue();
     }
     public Date extractExpiration(String token) {

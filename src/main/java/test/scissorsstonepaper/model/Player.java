@@ -21,8 +21,9 @@ public class  Player implements Serializable {
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column
-    private String imageUrl;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn()
+    Statistic statistic;
 
     @Override
     public String toString() {
@@ -30,7 +31,6 @@ public class  Player implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
                 '}';
     }
 }

@@ -19,18 +19,9 @@ public class StatisticService {
         return this.statisticRepo.findAll();
     }
 
-    public Statistic findStatisticByPlayerId(Long playerId) {
-        return this.statisticRepo.findStatisticByPlayerId(playerId)
-                .orElseThrow(() -> new StatisticNotFoundException("Statistic for Player #" + playerId + " was not found"));
-    }
-
-    public Statistic addStatistic(Statistic statistic) {
-        return this.statisticRepo.save(statistic);
-    }
-
-    public Statistic updateStatistic(Long playerId, String type) {
-        Statistic statistic = this.statisticRepo.findStatisticByPlayerId(playerId)
-                .orElseThrow(() -> new StatisticNotFoundException("Statistic for Player #" + playerId + " was not found"));
+    public Statistic updateStatistic(Long statisticId, String type) {
+        Statistic statistic = this.statisticRepo.findById(statisticId)
+                .orElseThrow(() -> new StatisticNotFoundException("Statistic with ID #" + statisticId + " was not found"));
         switch (type) {
             case "win":
                 statistic.setWinCount(statistic.getWinCount() + 1);

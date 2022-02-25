@@ -5,10 +5,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import test.scissorsstonepaper.exception.PlayerNotFoundException;
+import test.scissorsstonepaper.model.HighScore;
 import test.scissorsstonepaper.model.Player;
+import test.scissorsstonepaper.model.Statistic;
 import test.scissorsstonepaper.repo.PlayerRepo;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +35,10 @@ public class PlayerService implements UserDetailsService {
                     new ArrayList<>()
             );
         }
+    }
+
+    public Collection<HighScore> getHighScoreResult() {
+        return this.playerRepo.getHighScores();
     }
 
     public Player addPlayer(Player player) {

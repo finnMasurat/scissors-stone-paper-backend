@@ -10,14 +10,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateStatisticRequest implements Serializable {
-    private Long playerId;
     private String type;
 
     @Override
     public String toString() {
         return "UpdateStatisticRequest{" +
-                "playerId=" + playerId +
-                ", type='" + type + '\'' +
+                "type='" + type + '\'' +
                 '}';
     }
 }

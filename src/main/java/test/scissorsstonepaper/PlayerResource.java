@@ -15,12 +15,10 @@ import java.util.List;
 @RequestMapping("/player")
 public class PlayerResource {
     private final PlayerService playerService;
-    private final StatisticService statisticService;
     private final JwtUtil jwtUtil;
 
-    public PlayerResource(PlayerService playerService, StatisticService statisticService, JwtUtil jwtUtil) {
+    public PlayerResource(PlayerService playerService, JwtUtil jwtUtil) {
         this.playerService = playerService;
-        this.statisticService = statisticService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -46,14 +44,19 @@ public class PlayerResource {
 
     @PostMapping("/register")
     public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
+        player.setStatistic(new Statistic(0,0,0));
         Player newPlayer = playerService.addPlayer(player);
-        statisticService.addStatistic(new Statistic(null, newPlayer.getId(), 0, 0,0));
         return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Player> updatePlayer(@RequestBody Player player) {
-        Player updatedPlayer = playerService.updatePlayer(player);
+    public ResponseEntity<Player> updatePlayer(@RequestHeader("Authorization") String token, @RequestBody Player player) {
+        Long id = jwtUtil.getPlayerIdFromHeader(token);
+        Player currentPlayer = playerService.findPlayerById(id);
+        currentPlayer.setEmail(player.getEmail());
+        currentPlayer.setName(player.getName());
+        currentPlayer.setPassword(player.getPassword());
+        Player updatedPlayer = playerService.updatePlayer(currentPlayer);
         return new ResponseEntity<>(updatedPlayer, HttpStatus.OK);
     }
 
