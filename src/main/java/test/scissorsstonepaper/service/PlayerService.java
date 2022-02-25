@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import test.scissorsstonepaper.exception.PlayerNotFoundException;
 import test.scissorsstonepaper.model.HighScore;
 import test.scissorsstonepaper.model.Player;
-import test.scissorsstonepaper.model.Statistic;
 import test.scissorsstonepaper.repo.PlayerRepo;
 import javax.transaction.Transactional;
 import java.util.ArrayList;

@@ -11,7 +11,6 @@ import test.scissorsstonepaper.service.StatisticService;
 import test.scissorsstonepaper.utils.JwtUtil;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping("/statistic")
@@ -33,11 +32,6 @@ public class StatisticResource {
         return new ResponseEntity<>(statistic, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Statistic>> getAllStatistics() {
-        List<Statistic> statistics = statisticService.findAllStatistics();
-        return new ResponseEntity<>(statistics, HttpStatus.OK);
-    }
 
     @GetMapping("/highscores")
     public ResponseEntity<Collection<HighScore>> getHighScores() {
@@ -54,4 +48,10 @@ public class StatisticResource {
         Statistic updatedStatistic = statisticService.updateStatistic(statistic.getId(), request.getType());
         return new ResponseEntity<>(updatedStatistic, HttpStatus.OK);
     }
+
+//    @GetMapping
+//    public ResponseEntity<List<Statistic>> getAllStatistics() {
+//        List<Statistic> statistics = statisticService.findAllStatistics();
+//        return new ResponseEntity<>(statistics, HttpStatus.OK);
+//    }
 }
